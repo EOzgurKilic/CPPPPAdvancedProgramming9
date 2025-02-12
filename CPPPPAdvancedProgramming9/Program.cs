@@ -21,6 +21,34 @@
             IEnumerable<object> obj2 = new List<String>();
             //Contravariance is the opposite of Covariance.
             //For Contravariance's Example, I will finish the deligates tutorial and will be back here as this definition is known with deligates.
+           
+            
+            //Covariance in Arrays
+            //It is risky for type safety
+            //Because although we can assign a string array to an object array reference,
+            //we can still attempt to separately assign different type values to the elements of object array reference via indexer
+            //Which would cause a run time error. Check the following ex.
+            object[] obj3 = new string[]{};
+            //obj3[0] = 25; //As you can see, the compiler does not warn about this which will throw an error during runtime.
+            
+            
+            //Covariance in Return Methods
+            //Check Animal and Cat classes below
+            
+            
+            //Covariance in Generics
+            //We basically need to add out keyword to the generic parameters to utilize from Covariance.
+            //This feature is merely applicable to interfaces and delegates as far as I have learned until now.
+            IAnimal<object> str = new Dog<String>{ };
         }
     }
+    class Animal{public virtual object getAnimal() { return null; }}
+    //Although getAnimal() method is overriden, the type of the return changed into a class derived from the initial type.
+    //This is also due to Coveriance.
+    class Cat : Animal {public override String getAnimal() { return null; }}
+    
+    
+    interface IAnimal<out t>{} //Remove out keyword to see the error at 41st line
+    class Dog<t> : IAnimal<t> {}
+    
 }
